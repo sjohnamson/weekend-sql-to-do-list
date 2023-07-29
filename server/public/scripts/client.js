@@ -121,12 +121,12 @@ function renderTaskList(list) {
         let newRow = (`
             <tr>
                 <td>${item.task}</td>
-                <td><button class='completeBtn' 
+                <td><button class='completeBtn btn btn-outline-success' 
                     data-id='${item.id}' 
                     data-pending='${item.pending}'>
                     ${item.pending}
                 </button></td> 
-                <td><button class='deleteBtn' 
+                <td><button class='deleteBtn btn btn-outline-danger' 
                     data-id='${item.id}'>
                     Delete
                 </button></td>
@@ -137,12 +137,12 @@ function renderTaskList(list) {
             newRow = (`
             <tr class="text-decoration-line-through text-success">
                 <td class="text-secondary">${item.task}</td>
-                <td><button class='completeBtn' 
+                <td><button class='completeBtn btn btn-outline-danger' 
                     data-id='${item.id}' 
                     data-pending='${item.pending}'>
                     ${item.pending}
                 </button></td> 
-                <td><button class='deleteBtn' 
+                <td><button class='deleteBtn deleteBtn btn btn-outline-danger' 
                     data-id='${item.id}'>
                     Delete
                 </button></td>
