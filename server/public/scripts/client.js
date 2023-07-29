@@ -1,29 +1,77 @@
 $(document).ready(function () {
     console.log('jQuery sourced.');
-  
-    getTask();
+
+    getTasks();
     btnHandlers();
 })
 
 function btnHandlers() {
-    $('#addTaskBtn').on('click', addTask)
+    $('#addTaskBtn').on('click', handleAdd)
+    $('#taskList').on('click', '.completeBtn', handleComplete)
+    $('#taskList').on('click', '.deleteBtn', handleDelete)
 
 }
 
-function addTask(event) {
+function handleAdd(event) {
     event.preventDefault()
     console.log('in addtask')
 
     // make object /tasks
-    let newTask = $('#taskInput').val()
+    let newTask = {
+        task: $('#taskInput').val()
+    }
 
-    postToTasks(newTask) 
+    postToTasks(newTask)
 
 }
 
-    // ajax post to server
-    function postToTasks(dataToPost) {
-        console.log('data to post: ', dataToPost)
+function handleComplete() {
+    console.log('in handle complete')
+    // set task id to the id of the li
+    const taskID = $(this).data('id');
+    const pendingStatus = $(this).data('pending');
+    console.log('pending status: ', pendingStatus)
+    console.log('taskID: ', taskID)
+    // send put request to the server
+    $.ajax({
+        method: 'PUT',
+        url: `/tasks/updatetask/${taskID}`,
+        data: {
+            newPending: !pendingStatus
+        }
+    })
+        .then((response) => {
+            console.log('update task id: ', `${taskID}`)
+            getTasks()
+        })
+        .catch((response) => {
+            console.log('error in put ajax')
+        })
+
+}
+
+function handleDelete() {
+    console.log('in handle delete')
+    // set task id to the id of the li
+    let taskID = $(this).data('id');
+
+    // send delete request to the server
+    $.ajax({
+        method: 'DELETE',
+        url: `/tasks/deletetask/${taskID}`
+    })
+        .then((response) => {
+            console.log('delete task id: ', `${taskID}`)
+            getTasks()
+        })
+        .catch((response) => {
+            console.log('error in delete ajax')
+        })
+}
+
+// ajax post to server
+function postToTasks(dataToPost) {
+    console.log('data to post: ', dataToPost)
     $.ajax({
         method: 'POST',
         url: '/tasks',
@@ -31,8 +79,8 @@ function addTask(event) {
     })
         .then(response => {
             console.log('post response: ', response)
-//    getTask call to reload list
-            getTask()
+            //    getTask call to reload list
+            getTasks()
         })
         .catch(err => {
             console.log('post error', err);
@@ -40,9 +88,11 @@ function addTask(event) {
         })
 }
 
+
+
 // retrieves new task list and sends it ot render
-function getTask() {
-    console.log('in getTask')
+function getTasks() {
+    console.log('in getTasks')
 
     // ajjax get to retrieve task list
     $.ajax({
@@ -68,11 +118,22 @@ function renderTaskList(list) {
     // loop through the new list and append them to the DOM
     for (let item of list) {
         // assign newRow to row to be added and make it a jquery thing so we can add ID
-        let newRow = $(`
-            <li>${item.task} <button>Complete</button> <button>Delete</button></li>
+        let newRow = (`
+            <li>
+                ${item.task} 
+                <button class='completeBtn' 
+                    data-id='${item.id}' 
+                    data-pending='${item.pending}'>
+                    Complete:${item.pending}
+                </button> 
+                <button class='deleteBtn' 
+                    data-id='${item.id}'>
+                    Delete
+                </button>
+            </li>
         `)
 
-        newRow.data('id', item.id)
+        // newRow.data('id', item.id)
 
         // append to DOM
         $('#taskList').append(newRow)

@@ -9,7 +9,7 @@ tasksRouter.post('/', (req, res) => {
     console.log('new task in router post: ', newTask)
     let query = `INSERT INTO "tasks" ("task") VALUES ($1);`
 
-        // send request to database
+    // send request to database
     pool.query(query, [newTask.task])
         .then(response => {
             res.sendStatus(201);
@@ -29,9 +29,40 @@ tasksRouter.get('/', (req, res) => {
         .then(result => {
             res.send(result.rows)
         })
-        .catch (err => {
+        .catch(err => {
             console.log('error in router get: ', err);
         })
+})
+
+tasksRouter.put( '/updatetask/:id', (req, res) => {
+    console.log( 'in route put:', req.params.id, req.body );
+    const taskID = req.params.id
+    const taskPending = req.body.pending
+    // set database query
+    const query = `UPDATE "tasks" SET pending=$1 WHERE id=$2;`;
+    const values =[taskPending, taskID];
+
+    pool.query( query, values )
+        .then( (results)=>{
+        res.sendStatus( 200 );
+    }).catch( ( err )=>{
+        console.log( 'error with update:', err );
+        res.sendStatus( 500 );
+    })
+})
+
+tasksRouter.delete('/deletetask/:id', (req, res) => {
+    const taskID = req.params.id
+    let query = `DELETE FROM "tasks" WHERE id=$1`
+
+    pool.query(query, [taskID]) 
+        .then((response) => {
+            res.sendStatus(200)
+        })
+        .catch(err => {
+            console.log('error deleting book', err);
+            res.sendStatus(500);
+        });
 })
 
 
