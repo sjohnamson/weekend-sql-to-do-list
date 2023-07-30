@@ -97,12 +97,13 @@ function getTasks() {
     // ajjax get to retrieve task list
     $.ajax({
         method: 'GET',
-        url: 'tasks'
+        url: '/tasks?sort=id'
     })
         .then(response => {
             console.log('in client get', response);
             // assign response to a variable
             let taskList = response;
+
             renderTaskList(taskList)
         })
         .catch(err => {

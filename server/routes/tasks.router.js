@@ -23,7 +23,6 @@ tasksRouter.post('/', (req, res) => {
 tasksRouter.get('/', (req, res) => {
     console.log('in router get')
     let query = `SELECT * FROM "tasks" ORDER BY "id" ASC;`
-
     // send request to database
     pool.query(query)
         .then(result => {
