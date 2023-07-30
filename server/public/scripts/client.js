@@ -8,8 +8,33 @@ $(document).ready(function () {
 function btnHandlers() {
     $('#addTaskBtn').on('click', handleAdd)
     $('#taskList').on('click', '.completeBtn', handleComplete)
-    $('#taskList').on('click', '.deleteBtn', handleDelete)
+    $('#taskList').on('click', '.deleteBtn', startModal)
 
+}
+
+function startModal() {
+
+    console.log('in start modal')
+
+    let taskID = $(this).data('id');
+
+    swal({
+        title: "Are you sure you want to delete this task?",
+        text: "Once it's gone, it's gone forever!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                handleDelete(taskID)
+                swal("Not doing that anymore, your task is gone!", {
+                    icon: "success",
+                });
+            } else {
+                swal("Your task is still on your list!");
+            }
+        });
 }
 
 function handleAdd(event) {
@@ -22,6 +47,8 @@ function handleAdd(event) {
     }
 
     postToTasks(newTask)
+    // clear input fields
+    $('input').val('')
 
 }
 
@@ -50,18 +77,16 @@ function handleComplete() {
 
 }
 
-function handleDelete() {
+function handleDelete(idToDelete) {
     console.log('in handle delete')
-    // set task id to the id of the li
-    let taskID = $(this).data('id');
 
     // send delete request to the server
     $.ajax({
         method: 'DELETE',
-        url: `/tasks/deletetask/${taskID}`
+        url: `/tasks/deletetask/${idToDelete}`
     })
         .then((response) => {
-            console.log('delete task id: ', `${taskID}`)
+            console.log('delete task id: ', `${idToDelete}`)
             getTasks()
         })
         .catch((response) => {
@@ -97,7 +122,7 @@ function getTasks() {
     // ajjax get to retrieve task list
     $.ajax({
         method: 'GET',
-        url: 'tasks'
+        url: '/tasks'
     })
         .then(response => {
             console.log('in client get', response);
@@ -120,35 +145,41 @@ function renderTaskList(list) {
         // assign newRow to row to be added and make it a jquery thing so we can add ID
         let newRow = (`
             <tr>
-                <td>${item.task}</td>
                 <td><button class='completeBtn btn btn-outline-success' 
                     data-id='${item.id}' 
                     data-pending='${item.pending}'>
-                    ${item.pending}
+                     ◻️
                 </button></td> 
+                <td>${item.task}</td>
+                <td></td>
                 <td><button class='deleteBtn btn btn-outline-danger' 
                     data-id='${item.id}'>
+
                     Delete
                 </button></td>
             </tr>
         `)
 
         if (item.pending == true) {
+     console.log('complete time: ', item.completetime)
             newRow = (`
-            <tr class="text-decoration-line-through text-success">
-                <td class="text-secondary">${item.task}</td>
+            <tr class="text-success">
+
                 <td><button class='completeBtn btn btn-outline-danger' 
                     data-id='${item.id}' 
                     data-pending='${item.pending}'>
-                    ${item.pending}
+                    ✓
                 </button></td> 
-                <td><button class='deleteBtn deleteBtn btn btn-outline-danger' 
+                <td class="text-secondary text-decoration-line-through">${item.task}</td>
+                <td>${moment(item.completetime).format('MM-DD-YYYY')} </td>
+                <td><button class='deleteBtn btn btn-outline-danger' 
+
                     data-id='${item.id}'>
                     Delete
                 </button></td>
             </tr>
         `)
-            
+
         }
 
         // newRow.data('id', item.id)

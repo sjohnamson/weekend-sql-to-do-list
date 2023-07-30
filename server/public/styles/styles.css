@@ -2,3 +2,8 @@ body {
     background-color: azure;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+#inputForm {
+    background-color: rgb(126, 183, 123);
+}
+
