@@ -47,6 +47,8 @@ function handleAdd(event) {
     }
 
     postToTasks(newTask)
+    // clear input fields
+    $('input').val('')
 
 }
 
@@ -120,7 +122,7 @@ function getTasks() {
     // ajjax get to retrieve task list
     $.ajax({
         method: 'GET',
-        url: 'tasks'
+        url: '/tasks'
     })
         .then(response => {
             console.log('in client get', response);
@@ -147,26 +149,32 @@ function renderTaskList(list) {
                 <td><button class='completeBtn btn btn-outline-success' 
                     data-id='${item.id}' 
                     data-pending='${item.pending}'>
-                    ${item.pending}
+                    Mark Finished!
                 </button></td> 
-                <td><button type="button" class="btn deleteBtn btn-outline-danger"
-                    data-id="${item.id}">
+
+                <td></td>
+                <td><button class='deleteBtn btn btn-outline-danger' 
+                    data-id='${item.id}'>
+
                     Delete
                 </button></td>
             </tr>
         `)
 
         if (item.pending == true) {
+     console.log('complete time: ', item.completetime)
             newRow = (`
-            <tr class="text-decoration-line-through text-success">
-                <td class="text-secondary">${item.task}</td>
-                <td><button class="completeBtn btn btn-outline-danger" 
-                    data-id="${item.id}" 
-                    data-pending="${item.pending}">
-                    ${item.pending}
+
+            <tr class="text-success">
+                <td class="text-secondary text-decoration-line-through">${item.task}</td>
+                <td><button class='completeBtn btn btn-outline-danger' 
+                    data-id='${item.id}' 
+                    data-pending='${item.pending}'>
+                    ✓
                 </button></td> 
-                <td><button type="button" class="btn deleteBtn btn-outline-danger"
-                    data-id="${item.id}">
+                <td>${moment(item.completetime).format('MM-DD-YYYY')} </td>
+                <td><button class='deleteBtn btn btn-outline-danger' 
+                    data-id='${item.id}'>
                     Delete
                 </button></td>
             </tr>

@@ -38,11 +38,12 @@ tasksRouter.put( '/updatetask/:id', (req, res) => {
     console.log( 'in route put:', req.params.id, req.body );
     const taskID = req.params.id
     const taskPending = req.body.newPending
+
     // set database query
-    const query = `UPDATE "tasks" SET pending = $1 WHERE id=$2;`;
+    const query = `UPDATE "tasks" SET pending = $1, completetime = now() WHERE id=$2;`;
     const values =[taskPending, taskID];
 
-    pool.query( query, values )
+    pool.query(query, values)
         .then( (results)=>{
         res.sendStatus( 200 );
     }).catch( ( err )=>{
