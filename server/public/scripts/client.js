@@ -8,7 +8,6 @@ $(document).ready(function () {
 function btnHandlers() {
     $('#addTaskBtn').on('click', handleAdd)
     $('#taskList').on('click', '.completeBtn', handleComplete)
-    $('.deleteModalBtn').on('click', handleDelete)
     $('#taskList').on('click', '.deleteBtn', startModal)
 
 }
