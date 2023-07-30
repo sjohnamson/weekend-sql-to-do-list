@@ -148,10 +148,10 @@ function renderTaskList(list) {
                 <td><button class='completeBtn btn btn-outline-success' 
                     data-id='${item.id}' 
                     data-pending='${item.pending}'>
-                    Mark Finished!
+                    🔳
                 </button></td> 
+                <td>${item.task}</td>
                 <td></td>
-
                 <td><button class='deleteBtn btn btn-outline-danger' 
                     data-id='${item.id}'>
 
@@ -164,12 +164,13 @@ function renderTaskList(list) {
      console.log('complete time: ', item.completetime)
             newRow = (`
             <tr class="text-success">
-                <td class="text-secondary text-decoration-line-through">${item.task}</td>
+
                 <td><button class='completeBtn btn btn-outline-danger' 
                     data-id='${item.id}' 
                     data-pending='${item.pending}'>
                     ✓
                 </button></td> 
+                <td class="text-secondary text-decoration-line-through">${item.task}</td>
                 <td>${moment(item.completetime).format('MM-DD-YYYY')} </td>
                 <td><button class='deleteBtn btn btn-outline-danger' 
 
