@@ -120,12 +120,12 @@ function renderTaskList(list) {
         // assign newRow to row to be added and make it a jquery thing so we can add ID
         let newRow = (`
             <tr>
-                <td>${item.task}</td>
                 <td><button class='completeBtn btn btn-outline-success' 
                     data-id='${item.id}' 
                     data-pending='${item.pending}'>
                     ${item.pending}
                 </button></td> 
+                <td>${item.task}</td>
                 <td><button class='deleteBtn btn btn-outline-danger' 
                     data-id='${item.id}'>
                     Delete
@@ -136,19 +136,18 @@ function renderTaskList(list) {
         if (item.pending == true) {
             newRow = (`
             <tr class="text-decoration-line-through text-success">
-                <td class="text-secondary">${item.task}</td>
                 <td><button class='completeBtn btn btn-outline-danger' 
                     data-id='${item.id}' 
                     data-pending='${item.pending}'>
                     ${item.pending}
-                </button></td> 
+        </button></td> <td class="text-secondary">${item.task}</td>
                 <td><button class='deleteBtn deleteBtn btn btn-outline-danger' 
                     data-id='${item.id}'>
                     Delete
                 </button></td>
             </tr>
         `)
-            
+
         }
 
         // newRow.data('id', item.id)
