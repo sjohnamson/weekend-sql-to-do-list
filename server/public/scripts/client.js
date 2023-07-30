@@ -148,7 +148,7 @@ function renderTaskList(list) {
                 <td><button class='completeBtn btn btn-outline-success' 
                     data-id='${item.id}' 
                     data-pending='${item.pending}'>
-                    🔳
+                     ◻️
                 </button></td> 
                 <td>${item.task}</td>
                 <td></td>
