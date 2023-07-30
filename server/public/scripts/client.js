@@ -150,7 +150,7 @@ function renderTaskList(list) {
                     data-pending='${item.pending}'>
                      ◻️
                 </button></td> 
-                <td>${item.task}</td>
+                <td class="text-nowrap">${item.task}</td>
                 <td></td>
                 <td><button class='deleteBtn btn btn-outline-danger' 
                     data-id='${item.id}'>
@@ -170,7 +170,7 @@ function renderTaskList(list) {
                     data-pending='${item.pending}'>
                     ✓
                 </button></td> 
-                <td class="text-secondary text-decoration-line-through">${item.task}</td>
+                <td class="text-secondary text-decoration-line-through text-nowrap">${item.task}</td>
                 <td>${moment(item.completetime).format('MM-DD-YYYY')} </td>
                 <td><button class='deleteBtn btn btn-outline-danger' 
 
