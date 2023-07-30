@@ -15,66 +15,48 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
 <body>
     <header>
-        <h1>ToDo</h1>
+        <div class="col-8 mx-auto pt-5">
+            <h1>ToDo</h1>
+        </div>
     </header>
     <main>
-        <div class="row">
-            <div class="col-3"></div>
-            <Form class="col-6">
-                <input id="taskInput" placeholder="Task" type="text">
-                <button id="addTaskBtn" class="btn btn-outline-primary">Add Task</button>
-            </Form>
-            <div class="col-3"></div>
+        <Form id="inputForm" class="col-6 mx-auto border m-4 p-4 " action="/action_page.php">
+            <div class="mb-3">
+                <label for="task" class="form-label">New Task:</label>
+                <input id="taskInput" class="form-control" placeholder="enter new task" type="text">
+            </div>
+            <button type="submit" id="addTaskBtn" class="btn btn-outline-primary">Add Task</button>
+        </Form>
+        <div class="col-8 mx-auto pt-4">
+            <H2>Task List</H2>
         </div>
-        <H2>Tasks To Do</H2>
         <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <table class="table table-striped">
+            <div class="col-8 mx-auto">
+                <table class="table table-striped border">
                     <header>
                         <tr>
-                            <th>TASK</th>
-                            <th>Complete?</th>
-                            <th>Day Completed</th>
-                            <th>Delete</th>
+                            <th class="bg-info">Complete?</th>
+                            <th class="bg-info">Task</h5>
+                            <th class="bg-info">Day Completed</th>
+                            <th class="bg-info">Delete</th>
                         </tr>
                     </header>
                     <tbody id="taskList">
                         <!-- this is where entered tasks will live -->
                     </tbody>
                 </table>
-                <div class="col-2"></div>
+
             </div>
         </div>
     </main>
 
 </body>
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to delete that task?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Really make sure, cause once it's gone, it's gone.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Don't Delete</button>
-                <button type="button" class="btn deleteModalBtn btn-primary">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 </html>
