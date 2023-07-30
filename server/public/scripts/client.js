@@ -15,9 +15,9 @@ function btnHandlers() {
 function startModal() {
 
     console.log('in start modal')
-
+    // set task id to the id of the li
     let taskID = $(this).data('id');
-
+// call swal, which opens a pop up window
     swal({
         title: "Are you sure you want to delete this task?",
         text: "Once it's gone, it's gone forever!",
@@ -27,6 +27,7 @@ function startModal() {
     })
         .then((willDelete) => {
             if (willDelete) {
+                // call handleDelete() to delete task in database and re-render list
                 handleDelete(taskID)
                 swal("Not doing that anymore, your task is gone!", {
                     icon: "success",
@@ -52,7 +53,7 @@ function handleAdd(event) {
 
 function handleComplete() {
     console.log('in handle complete')
-    // set task id to the id of the li
+
     const taskID = $(this).data('id');
     const pendingStatus = $(this).data('pending');
     console.log('pending status: ', pendingStatus)
