@@ -63,7 +63,7 @@ function handlePopUp() {
     let taskID = $(this).data('id');
 
     // swal is a sweet alert method to create a pop up window
-    swal({
+    Swal({
         title: "Are you sure you want to delete this task?",
         text: "Once it's gone, it's gone forever!",
         icon: "warning",
@@ -74,11 +74,11 @@ function handlePopUp() {
             if (willDelete) {
                 // if the user confirms then the delete function will be called, if they don't confirm nothing happens
                 taskDelete(taskID)
-                swal("Not doing that anymore, your task is gone!", {
+                Swal("Not doing that anymore, your task is gone!", {
                     icon: "success",
                 });
             } else {
-                swal("Your task is still on your list!");
+                Swal("Your task is still on your list!");
             }
         });
 }
