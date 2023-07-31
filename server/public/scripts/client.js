@@ -33,7 +33,7 @@ function handleAdd(event) {
 
 function handleComplete() {
     console.log('in handle complete')
-    // set task id to the id of the li
+
     const taskID = $(this).data('id');
     const pendingStatus = $(this).data('pending');
     console.log('pending status: ', pendingStatus)
@@ -82,6 +82,7 @@ function handlePopUp() {
             }
         });
 }
+
 function taskDelete(idToDelete) {
     console.log('in handle delete')
 
