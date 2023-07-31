@@ -5,7 +5,6 @@ CREATE TABLE "tasks"(
 	"completetime" date
 );
 
-INSERT INTO "tasks" (
-	"task")
+INSERT INTO "tasks" ("task")
 VALUES 
 ('do dishes'), ('dance party planning');
