@@ -1,4 +1,20 @@
 body {
-    background-color: azure;
+    background-color: rgb(145, 219, 219);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    background-color: rgb(188, 113, 142);
+}
+
+#tableName {
+    background-color: rgb(93, 202, 202);
+}
+
+#inputForm {
+    background-color: rgb(171, 201, 169);
+}
+
+th {
+    vertical-align: middle;
 }

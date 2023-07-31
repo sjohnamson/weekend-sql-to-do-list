@@ -22,12 +22,18 @@ tasksRouter.post('/', (req, res) => {
 
 tasksRouter.get('/', (req, res) => {
     console.log('in router get')
+    let sort = req.query.sort;
     let query = `SELECT * FROM "tasks" ORDER BY "id" ASC;`
 
     // send request to database
     pool.query(query)
         .then(result => {
-            res.send(result.rows)
+            let newTasks = result.rows
+            // if request comes from reSort button reverse the order of the array
+            if (sort == 'switch') {
+                newTasks = newTasks.reverse()
+            }
+            res.send(newTasks)
         })
         .catch(err => {
             console.log('error in router get: ', err);
@@ -38,11 +44,12 @@ tasksRouter.put( '/updatetask/:id', (req, res) => {
     console.log( 'in route put:', req.params.id, req.body );
     const taskID = req.params.id
     const taskPending = req.body.newPending
+
     // set database query
-    const query = `UPDATE "tasks" SET pending = $1 WHERE id=$2;`;
+    const query = `UPDATE "tasks" SET pending = $1, completetime = now() WHERE id=$2;`;
     const values =[taskPending, taskID];
 
-    pool.query( query, values )
+    pool.query(query, values)
         .then( (results)=>{
         res.sendStatus( 200 );
     }).catch( ( err )=>{
