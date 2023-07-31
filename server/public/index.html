@@ -22,11 +22,11 @@
 <body>
     <header>
         <div class="col-8 mx-auto pt-5">
-            <h1>ToDo</h1>
+            <h1 class="p-3">Super Cool To Do List</h1>
         </div>
     </header>
     <main>
-        <Form id="inputForm" class="col-6 mx-auto border m-4 p-4 " action="/action_page.php">
+        <Form id="inputForm" class="col-6 mx-auto border border-3 border-secondary m-4 p-4 " action="/action_page.php">
             <div class="mb-3">
                 <label for="task" class="form-label">New Task:</label>
                 <input id="taskInput" class="form-control" placeholder="enter new task" type="text">
@@ -34,7 +34,18 @@
             <button type="submit" id="addTaskBtn" class="btn btn-outline-primary">Add Task</button>
         </Form>
         <div class="col-8 mx-auto pt-4">
-            <H2>Task List</H2>
+            <div>
+                <span><H2>Task List</H2></span>
+                <span class="dropdown">
+                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown">
+                        Reorder Tasks
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item" id="sortBtn">oldest to newest</button></li>
+                        <li><button class="dropdown-item" id="reSortBtn">newest to oldest</button></li>
+                    </ul>
+                </span>
+            </div>
         </div>
         <div class="row">
             <div class="col-8 mx-auto">
@@ -42,7 +53,7 @@
                     <header>
                         <tr>
                             <th class="bg-info">Complete?</th>
-                            <th class="bg-info">Task</h5>
+                            <th class="bg-info">Task</th>
                             <th class="bg-info">Day Completed</th>
                             <th class="bg-info">Delete</th>
                         </tr>
