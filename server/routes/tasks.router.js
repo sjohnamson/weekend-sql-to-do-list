@@ -22,12 +22,20 @@ tasksRouter.post('/', (req, res) => {
 
 tasksRouter.get('/', (req, res) => {
     console.log('in router get')
+    let sort = req.query.sort;
+    console.log('sort: ', sort)
     let query = `SELECT * FROM "tasks" ORDER BY "id" ASC;`
 
     // send request to database
     pool.query(query)
         .then(result => {
-            res.send(result.rows)
+            console.log('result', result.rows)
+            let newTasks = result.rows
+            if (sort == 'switch') {
+                newTasks = newTasks.reverse()
+                console.log('reversed array: ', newTasks)
+            }
+            res.send(newTasks)
         })
         .catch(err => {
             console.log('error in router get: ', err);

@@ -9,8 +9,29 @@ function btnHandlers() {
     $('#addTaskBtn').on('click', handleAdd)
     $('#taskList').on('click', '.completeBtn', handleComplete)
     $('#taskList').on('click', '.deleteBtn', startModal)
+    $('#reSortBtn').on('click', handleSort)
+    $('#sortBtn').on('click', getTasks)
 
 }
+
+function handleSort() {
+    $.ajax({
+        method: 'GET',
+        url: '/tasks?sort=switch'
+    })
+        .then(response => {
+            console.log('in client get', response);
+            // assign response to a variable
+            let taskList = response;
+
+            renderTaskList(taskList)
+        })
+        .catch(err => {
+            console.log('error in client get', err)
+            alert('Unable to add a new task, try again later')
+        })
+}
+
 
 function startModal() {
 
@@ -128,6 +149,7 @@ function getTasks() {
             console.log('in client get', response);
             // assign response to a variable
             let taskList = response;
+
             renderTaskList(taskList)
         })
         .catch(err => {
