@@ -10,7 +10,7 @@ function btnHandlers() {
     $('#taskList').on('click', '.completeBtn', handleComplete)
     $('#taskList').on('click', '.deleteBtn', startModal)
     $('#reSortBtn').on('click', handleSort)
-    $('#sortBtn').on('click', handleAdd)
+    $('#sortBtn').on('click', getTasks)
 
 }
 

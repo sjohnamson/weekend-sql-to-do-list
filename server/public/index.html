@@ -33,11 +33,11 @@
             </div>
             <button type="submit" id="addTaskBtn" class="btn btn-outline-primary">Add Task</button>
         </Form>
-        <div class="col-8 mx-auto pt-4">
-            <div>
-                <span><H2>Task List</H2></span>
+        <div id="tableName" class="col-8 mx-auto p-2">
+            <div class="d-flex">
+                <H2 class="m-3">Task List</H2>
                 <span class="dropdown">
-                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown">
+                    <button type="button" class="btn btn-outline-success dropdown-toggle m-3" data-bs-toggle="dropdown">
                         Reorder Tasks
                     </button>
                     <ul class="dropdown-menu">
@@ -49,13 +49,13 @@
         </div>
         <div class="row">
             <div class="col-8 mx-auto">
-                <table class="table table-striped border">
+                <table class="table table-striped border border-3 border-secondary">
                     <header>
                         <tr>
-                            <th class="bg-info">Complete?</th>
-                            <th class="bg-info">Task</th>
-                            <th class="bg-info">Day Completed</th>
-                            <th class="bg-info">Delete</th>
+                            <th class="bg-info col-1">Complete?</th>
+                            <th class="bg-info col-4">Task</th>
+                            <th class="bg-info col-2">Day Completed</th>
+                            <th class="bg-info col-1">Delete</th>
                         </tr>
                     </header>
                     <tbody id="taskList">
