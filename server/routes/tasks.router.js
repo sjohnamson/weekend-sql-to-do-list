@@ -23,17 +23,15 @@ tasksRouter.post('/', (req, res) => {
 tasksRouter.get('/', (req, res) => {
     console.log('in router get')
     let sort = req.query.sort;
-    console.log('sort: ', sort)
     let query = `SELECT * FROM "tasks" ORDER BY "id" ASC;`
 
     // send request to database
     pool.query(query)
         .then(result => {
-            console.log('result', result.rows)
             let newTasks = result.rows
+            // if request comes from reSort button reverse the order of the array
             if (sort == 'switch') {
                 newTasks = newTasks.reverse()
-                console.log('reversed array: ', newTasks)
             }
             res.send(newTasks)
         })

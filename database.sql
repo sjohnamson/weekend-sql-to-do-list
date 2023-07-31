@@ -1,6 +1,8 @@
 CREATE TABLE "tasks"(
 	"id" serial primary key,
-	"task" varchar (150) not null
+	"task" varchar (150) not null,
+	"pending" BOOLEAN DEFAULT false,
+	"completetime" date
 );
 
 INSERT INTO "tasks" (

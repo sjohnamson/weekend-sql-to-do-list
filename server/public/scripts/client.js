@@ -8,54 +8,11 @@ $(document).ready(function () {
 function btnHandlers() {
     $('#addTaskBtn').on('click', handleAdd)
     $('#taskList').on('click', '.completeBtn', handleComplete)
-    $('#taskList').on('click', '.deleteBtn', startModal)
+    $('#taskList').on('click', '.deleteBtn', handlePopUp)
+    // reSortBtn changes task list to newest to oldest, sortBtn changes it back to oldest to newest
     $('#reSortBtn').on('click', handleSort)
     $('#sortBtn').on('click', getTasks)
 
-}
-
-function handleSort() {
-    $.ajax({
-        method: 'GET',
-        url: '/tasks?sort=switch'
-    })
-        .then(response => {
-            console.log('in client get', response);
-            // assign response to a variable
-            let taskList = response;
-
-            renderTaskList(taskList)
-        })
-        .catch(err => {
-            console.log('error in client get', err)
-            alert('Unable to add a new task, try again later')
-        })
-}
-
-
-function startModal() {
-
-    console.log('in start modal')
-
-    let taskID = $(this).data('id');
-
-    swal({
-        title: "Are you sure you want to delete this task?",
-        text: "Once it's gone, it's gone forever!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    })
-        .then((willDelete) => {
-            if (willDelete) {
-                handleDelete(taskID)
-                swal("Not doing that anymore, your task is gone!", {
-                    icon: "success",
-                });
-            } else {
-                swal("Your task is still on your list!");
-            }
-        });
 }
 
 function handleAdd(event) {
@@ -67,6 +24,7 @@ function handleAdd(event) {
         task: $('#taskInput').val()
     }
 
+    // sends object to be added
     postToTasks(newTask)
     // clear input fields
     $('input').val('')
@@ -98,7 +56,33 @@ function handleComplete() {
 
 }
 
-function handleDelete(idToDelete) {
+// function to initialize a pop up window to make sure the user wants to delete a task
+function handlePopUp() {
+    console.log('in start pop up')
+
+    let taskID = $(this).data('id');
+
+    // swal is a sweet alert method to create a pop up window
+    swal({
+        title: "Are you sure you want to delete this task?",
+        text: "Once it's gone, it's gone forever!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                // if the user confirms then the delete function will be called, if they don't confirm nothing happens
+                taskDelete(taskID)
+                swal("Not doing that anymore, your task is gone!", {
+                    icon: "success",
+                });
+            } else {
+                swal("Your task is still on your list!");
+            }
+        });
+}
+function taskDelete(idToDelete) {
     console.log('in handle delete')
 
     // send delete request to the server
@@ -112,6 +96,25 @@ function handleDelete(idToDelete) {
         })
         .catch((response) => {
             console.log('error in delete ajax')
+        })
+}
+
+// this function will change the task list on the dom to newest to oldest
+function handleSort() {
+    $.ajax({
+        method: 'GET',
+        url: '/tasks?sort=switch'
+    })
+        .then(response => {
+            console.log('in client get', response);
+            // assign response to a variable
+            let taskList = response;
+
+            renderTaskList(taskList)
+        })
+        .catch(err => {
+            console.log('error in client get', err)
+            alert('Unable to add a new task, try again later')
         })
 }
 
@@ -164,7 +167,7 @@ function renderTaskList(list) {
 
     // loop through the new list and append them to the DOM
     for (let item of list) {
-        // assign newRow to row to be added and make it a jquery thing so we can add ID
+        // assign newRow to row to be added and add data-ids to buttons
         let newRow = (`
             <tr>
                 <td><button class='completeBtn btn btn-outline-success' 
@@ -182,8 +185,9 @@ function renderTaskList(list) {
             </tr>
         `)
 
+        // if user clicks on completion button newRow styling changes and time gets added to table
         if (item.pending == true) {
-     console.log('complete time: ', item.completetime)
+            console.log('complete time: ', item.completetime)
             newRow = (`
             <tr class="text-success">
 
@@ -203,8 +207,6 @@ function renderTaskList(list) {
         `)
 
         }
-
-        // newRow.data('id', item.id)
 
         // append to DOM
         $('#taskList').append(newRow)
