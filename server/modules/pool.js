@@ -8,11 +8,12 @@ if (process.env.DATABASE_URL) {
             rejectUnauthorized: false
         }
     });
-} else
-    pool = new pg.Pool({
-    host: 'localhost',
-    port: 5432,
-    database: 'weekend_to_do_app'
-});
+}
+// else
+//     pool = new pg.Pool({
+//     host: 'localhost',
+//     port: 5432,
+//     database: 'weekend_to_do_app'
+// });
 
 module.exports = pool;
